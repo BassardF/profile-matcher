@@ -7,7 +7,7 @@
 
 ## DB
 
-[DB Schema](https://i.ibb.co/ZRgFkQfC/Screenshot-2025-04-05-at-1-38-39-PM.png)
+![DB Schema](https://i.ibb.co/ZRgFkQfC/Screenshot-2025-04-05-at-1-38-39-PM.png)
 
 * The DB model for Campaigns has been made simple (name only) to respect the rule, but doesn't match the shape of the one mocked (unusual)
 * Devices should clearly be split in various sub tables, but as they are not central to the task, they are left as one
