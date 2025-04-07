@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Dict, Any, List, Optional
 from .models import Player
 
 def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
@@ -23,21 +23,21 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
         return False
 
     # Check campaign dates
-    current_time = datetime.now(timezone.utc)
-    start_date = campaign.get("start_date")
-    end_date = campaign.get("end_date")
+    current_time: datetime = datetime.now(timezone.utc)
+    start_date: Optional[datetime] = campaign.get("start_date")
+    end_date: Optional[datetime] = campaign.get("end_date")
     
     if start_date and end_date:
         if current_time < start_date or current_time > end_date:
             return False
     
     # Check matchers
-    matchers = campaign.get("matchers", {})
+    matchers: Dict[str, Any] = campaign.get("matchers", {})
     
     # Check level requirements
     if level_requirements := matchers.get("level"):
-        min_level = level_requirements.get("min")
-        max_level = level_requirements.get("max")
+        min_level: Optional[int] = level_requirements.get("min")
+        max_level: Optional[int] = level_requirements.get("max")
         
         if min_level is not None and player.level < min_level:
             return False
@@ -45,7 +45,7 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
             return False
     
     # Get player items with quantities
-    player_item_names = [player_item.item.name for player_item in player.inventory if player_item.quantity > 0]
+    player_item_names: List[str] = [player_item.item.name for player_item in player.inventory if player_item.quantity > 0]
     
     # Check 'has' requirements
     if has_requirements := matchers.get("has"):

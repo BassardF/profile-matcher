@@ -1,9 +1,18 @@
 """
 Mock campaigns: fake API.
 """
+from typing import Dict, Any, List, Optional, Union
 
-def create_campaign(campaign_id, name, level_min=1, level_max=float('inf'), countries=[], 
-                   required_items=[], excluded_items=[], enabled=True):
+def create_campaign(
+    campaign_id: str, 
+    name: str, 
+    level_min: int = 1, 
+    level_max: Union[int, float] = float('inf'), 
+    countries: List[str] = [], 
+    required_items: List[str] = [], 
+    excluded_items: List[str] = [], 
+    enabled: bool = True
+) -> Dict[str, Any]:
     return {
         "id": campaign_id,
         "game": "mygame",
@@ -28,7 +37,7 @@ def create_campaign(campaign_id, name, level_min=1, level_max=float('inf'), coun
         "last_updated": "2024-07-13 11:46:58Z"
     }
 
-def get_active_campaigns():
+def get_active_campaigns() -> List[Dict[str, Any]]:
     """
     Return a list of currently active campaigns.
     This is a mock function simulating a call to an external API service.
