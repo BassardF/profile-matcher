@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from models import db, Player, Campaign
 from campaigns import get_active_campaigns
@@ -5,7 +6,8 @@ from schemas import ma, player_schema, api_campaigns_schema
 from services import filter_eligible_campaigns
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///profiles.db'
+basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(basedir, "instance", "profiles.db")}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Init DB & Marshmallow
