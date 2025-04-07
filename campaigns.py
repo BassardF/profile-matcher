@@ -4,16 +4,6 @@ Mock campaigns: fake API.
 
 def create_campaign(campaign_id, name, level_min=1, level_max=float('inf'), countries=[], 
                    required_items=[], excluded_items=[], enabled=True):
-
-    if countries is None:
-        countries = ["US", "RO", "CA"]
-    
-    if required_items is None:
-        required_items = ["item_1"]
-        
-    if excluded_items is None:
-        excluded_items = ["item_4"]
-    
     return {
         "id": campaign_id,
         "game": "mygame",
@@ -45,12 +35,12 @@ def get_active_campaigns():
     """
     return [
         create_campaign(
-            campaign_id="campaign-005",
+            campaign_id="campaign-007",
             name="mycampaign",
             level_min=1,
             level_max=3,
             countries=["US", "RO", "CA"],
-            required_items=["item_1"],
-            excluded_items=["item_4"]
+            required_items=["Item 1"],
+            excluded_items=["Item 4"]
         )
     ]
