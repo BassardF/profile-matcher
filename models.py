@@ -47,20 +47,12 @@ class Player(db.Model):
     
     devices = db.relationship('Device', secondary=player_device, lazy='subquery',
                              backref=db.backref('players', lazy=True))
-    player_items = db.relationship('PlayerItem', lazy='subquery',
+    inventory = db.relationship('PlayerItem', lazy='subquery',
                                  cascade='all, delete-orphan',
                                  backref=db.backref('player', lazy=True))
     campaigns = db.relationship('Campaign', secondary=player_campaign, lazy='subquery',
                                backref=db.backref('players', lazy=True))
     clan = db.relationship('Clan', backref='players')
-    
-    # Method to get items with quantities as a dictionary
-    def get_items_dict(self):
-        result = {}
-        for player_item in self.player_items:
-            if player_item.item:
-                result[player_item.item.key] = player_item.quantity
-        return result
 
 
 class Clan(db.Model):

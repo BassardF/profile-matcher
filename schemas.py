@@ -68,17 +68,8 @@ class PlayerSchema(ma.SQLAlchemyAutoSchema):
 
     devices = fields.List(fields.Nested(DeviceSchema, only=("device_id", "model", "carrier", "firmware")))
     clan = fields.Nested(ClanSchema, only=("clan_id", "name"))
-    active_campaigns = fields.List(fields.Nested(CampaignSchema, only=("campaign_id", "name")), attribute="campaigns")
+    campaigns = fields.List(fields.Nested(CampaignSchema, only=("campaign_id", "name")), attribute="campaigns")
     items = fields.Dict(keys=fields.Str(), values=fields.Int())
-    
-    @post_dump
-    def process_items(self, data, **kwargs):
-        player = self.instance
-        
-        if player:
-            data['items'] = player.get_items_dict()
-        
-        return data
 
 class MatcherSchema(ma.Schema):
     level = ma.Dict(keys=ma.Str(enum=['min', 'max']), values=ma.Int())
