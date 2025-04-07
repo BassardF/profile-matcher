@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from typing import Dict, Any
-from models import Player
+from .models import Player
 
 def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
     """
@@ -35,10 +35,13 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
     matchers = campaign.get("matchers", {})
     
     # Check level requirements
-    if level_matcher := matchers.get("level"):
-        level_min = level_matcher.get("min", 0)
-        level_max = level_matcher.get("max", float('inf'))
-        if not (level_min <= player.level <= level_max):
+    if level_requirements := matchers.get("level"):
+        min_level = level_requirements.get("min")
+        max_level = level_requirements.get("max")
+        
+        if min_level is not None and player.level < min_level:
+            return False
+        if max_level is not None and player.level > max_level:
             return False
     
     # Get player items with quantities
@@ -46,7 +49,7 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
     
     # Check 'has' requirements
     if has_requirements := matchers.get("has"):
-        # Check countries
+        # Check country
         if required_countries := has_requirements.get("country"):
             if player.country not in required_countries:
                 return False

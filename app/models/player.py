@@ -1,7 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
+"""
+Player model and related association tables
+"""
+from . import db
 
-db = SQLAlchemy()
-
+# Association tables
 player_campaign = db.Table('player_campaign',
     db.Column('player_id', db.String, db.ForeignKey('players.player_id'), primary_key=True),
     db.Column('campaign_id', db.String, db.ForeignKey('campaigns.campaign_id'), primary_key=True)
@@ -13,6 +15,7 @@ player_device = db.Table('player_device',
 )
 
 class PlayerItem(db.Model):
+    """Association model between Player and Item with quantity"""
     __tablename__ = 'player_item'
     
     player_id = db.Column(db.String, db.ForeignKey('players.player_id'), primary_key=True)
@@ -21,8 +24,9 @@ class PlayerItem(db.Model):
     
     # Relationship to Item
     item = db.relationship("Item")
-    
+
 class Player(db.Model):
+    """Player model representing user profiles"""
     __tablename__ = 'players'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -45,49 +49,20 @@ class Player(db.Model):
     clan_id = db.Column(db.String, db.ForeignKey('clans.clan_id'))
     custom_field = db.Column(db.String)
     
+    # Relationships
     devices = db.relationship('Device', secondary=player_device, lazy='subquery',
                              backref=db.backref('players', lazy=True))
     inventory = db.relationship('PlayerItem', lazy='subquery',
-                                 cascade='all, delete-orphan',
-                                 backref=db.backref('player', lazy=True))
+                                cascade='all, delete-orphan',
+                                backref=db.backref('player', lazy=True))
     campaigns = db.relationship('Campaign', secondary=player_campaign, lazy='subquery',
                                backref=db.backref('players', lazy=True))
     clan = db.relationship('Clan', backref='players')
-
-
-class Clan(db.Model):
-    __tablename__ = 'clans'
     
-    clan_id = db.Column(db.String, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-
-
-class Device(db.Model):
-    __tablename__ = 'devices'
-    
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    device_id = db.Column(db.Integer, nullable=False)
-    model = db.Column(db.String)
-    carrier = db.Column(db.String)
-    firmware = db.Column(db.String)
-    
-    __table_args__ = (
-        db.UniqueConstraint('device_id', 'model', name='uix_device_id_model'),
-    )
-
-
-class Item(db.Model):
-    __tablename__ = 'items'
-    
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    key = db.Column(db.String, unique=True, nullable=False)
-    name = db.Column(db.String)
-    description = db.Column(db.String)
-    
-
-class Campaign(db.Model):
-    __tablename__ = 'campaigns'
-    
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    campaign_id = db.Column(db.String, unique=True, nullable=False)
-    name = db.Column(db.String, nullable=False)
+    def get_items_dict(self):
+        """Convert player items to a dictionary mapping item keys to quantities"""
+        result = {}
+        for player_item in self.inventory:
+            if player_item.item:
+                result[player_item.item.key] = player_item.quantity
+        return result

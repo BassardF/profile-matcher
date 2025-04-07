@@ -1,9 +1,9 @@
 import os
 from flask import Flask, jsonify
-from models import db, Player, Campaign
-from campaigns import get_active_campaigns
-from schemas import ma, player_schema, api_campaigns_schema
-from services import filter_eligible_campaigns
+from .models import db, Player, Campaign
+from .campaigns import get_active_campaigns
+from .schemas import ma, player_schema, api_campaigns_schema
+from .services import filter_eligible_campaigns
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
