@@ -12,12 +12,16 @@ player_device = db.Table('player_device',
     db.Column('device_id', db.Integer, db.ForeignKey('devices.id'), primary_key=True)
 )
 
-player_item = db.Table('player_item',
-    db.Column('player_id', db.String, db.ForeignKey('players.player_id'), primary_key=True),
-    db.Column('item_id', db.Integer, db.ForeignKey('items.id'), primary_key=True),
-    db.Column('quantity', db.Integer, nullable=False, default=1)
-)
-
+class PlayerItem(db.Model):
+    __tablename__ = 'player_item'
+    
+    player_id = db.Column(db.String, db.ForeignKey('players.player_id'), primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), primary_key=True)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+    
+    # Relationship to Item
+    item = db.relationship("Item")
+    
 class Player(db.Model):
     __tablename__ = 'players'
     
@@ -43,11 +47,20 @@ class Player(db.Model):
     
     devices = db.relationship('Device', secondary=player_device, lazy='subquery',
                              backref=db.backref('players', lazy=True))
-    items = db.relationship('Item', secondary=player_item, lazy='subquery',
-                           backref=db.backref('players', lazy=True))
+    player_items = db.relationship('PlayerItem', lazy='subquery',
+                                 cascade='all, delete-orphan',
+                                 backref=db.backref('player', lazy=True))
     campaigns = db.relationship('Campaign', secondary=player_campaign, lazy='subquery',
                                backref=db.backref('players', lazy=True))
     clan = db.relationship('Clan', backref='players')
+    
+    # Method to get items with quantities as a dictionary
+    def get_items_dict(self):
+        result = {}
+        for player_item in self.player_items:
+            if player_item.item:
+                result[player_item.item.key] = player_item.quantity
+        return result
 
 
 class Clan(db.Model):
