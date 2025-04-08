@@ -31,7 +31,23 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
         if current_time < start_date or current_time > end_date:
             return False
     
-    # Check matchers
+    # Check matchers against player profile
+    if not check_player_matches_campaign_criteria(player, campaign):
+        return False
+    
+    return True
+
+def check_player_matches_campaign_criteria(player: Player, campaign: Dict[str, Any]) -> bool:
+    """
+    Check if a player matches the criteria defined in a campaign's matchers.
+    
+    Args:
+        player: Player object containing the player data
+        campaign: Dictionary containing the campaign configuration and matcher rules
+        
+    Returns:
+        bool: True if the player matches all criteria, False otherwise
+    """
     matchers: Dict[str, Any] = campaign.get("matchers", {})
     
     # Check level requirements
