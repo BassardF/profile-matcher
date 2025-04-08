@@ -57,6 +57,14 @@ test-health:
 test-config:
 	curl -X GET http://127.0.0.1:$(PORT)/get_client_config/$(PLAYER_ID)
 
+# Run unit tests
+test:
+	@if [ "$(IN_VENV)" = "false" ]; then \
+		echo "Please activate the virtual environment first with 'source $(VENV_NAME)/bin/activate'"; \
+		exit 1; \
+	fi
+	pytest -v tests/
+
 # Setup everything (create venv, install deps, init db)
 setup: venv
 	@echo "Run the following commands to complete setup:"
@@ -71,10 +79,11 @@ help:
 	@echo "  make activate     - Show instructions to activate the virtual environment"
 	@echo "  make install      - Install dependencies (run after activating venv)"
 	@echo "  make init-db      - Initialize the database with sample data"
-	@echo "  make run-server   - Start the Flask server"
+	@echo "  make run          - Start the Flask server"
 	@echo "  make test-health  - Test the healthcheck endpoint"
 	@echo "  make test-config  - Test the get_client_config endpoint with sample player ID"
+	@echo "  make test         - Run unit tests"
 	@echo "  make setup        - Setup everything (will provide instructions for next steps)"
 	@echo "  make help         - Show this help message"
 
-.PHONY: venv activate install init-db run-server test-health test-config setup help
+.PHONY: venv activate install init-db run test-health test-config test setup help
