@@ -17,3 +17,14 @@
 * My usage of SQLAlchemy is probably unoptimized, we are probably fetching way too much data to do the checks.
 * A lot of logic is still done at the View level in app.js. If the application was meant to be a bit more complex, this would be moved to an in-between layer.
 * The approach to matchers is manual, would not scale with with a large number of matchers
+
+## How to use
+
+* This is a standard Flask:
+    * Create & Activate a Venv
+    * Install dependencies (make install)
+    * Initialize the database (make init-db)
+    * Run the server (make run)
+    * Test endpoints (make test-config)
+    * Run unit tests (make test)
+    
