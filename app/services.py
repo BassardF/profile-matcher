@@ -36,16 +36,11 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
     
     # Check level requirements
     if level_requirements := matchers.get("level"):
-        min_level: Optional[int] = level_requirements.get("min")
-        max_level: Optional[int] = level_requirements.get("max")
+        min_level = level_requirements.get("min", 1)
+        max_level = level_requirements.get("max", float('inf'))
         
-        if min_level is not None and player.level < min_level:
+        if not (min_level <= player.level <= max_level):
             return False
-        if max_level is not None and player.level > max_level:
-            return False
-    
-    # Get player items with quantities
-    player_item_names: List[str] = [player_item.item.name for player_item in player.inventory if player_item.quantity > 0]
     
     # Check 'has' requirements
     if has_requirements := matchers.get("has"):
@@ -56,15 +51,15 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
         
         # Check items
         if required_items := has_requirements.get("items"):
-            # Check if player has all required items with quantity > 0
-            if not all(item in player_item_names for item in required_items):
+            # Check if player has all required items
+            if not player.has_all_items(required_items):
                 return False
     
     # Check 'does_not_have' requirements
     if exclusion_requirements := matchers.get("does_not_have"):
         if excluded_items := exclusion_requirements.get("items"):
-            # Check if player has any excluded items with quantity > 0
-            if any(item in player_item_names for item in excluded_items):
+            # Check if player has any excluded items
+            if player.has_any_items(excluded_items):
                 return False
     
     return True

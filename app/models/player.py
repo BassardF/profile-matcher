@@ -2,6 +2,7 @@
 Player model and related association tables
 """
 from . import db
+from typing import List, Dict, Set
 
 # Association tables
 player_campaign = db.Table('player_campaign',
@@ -59,13 +60,46 @@ class Player(db.Model):
                                backref=db.backref('players', lazy=True))
     clan = db.relationship('Clan', backref='players')
     
-    def get_items_dict(self):
+    def get_items_dict(self) -> Dict[str, int]:
         """Convert player items to a dictionary mapping item keys to quantities"""
         result = {}
         for player_item in self.inventory:
             if player_item.item:
                 result[player_item.item.key] = player_item.quantity
         return result
+    
+    def get_item_names(self) -> List[str]:
+        """Get a list of item names that the player has with quantity > 0
+        
+        Returns:
+            List[str]: List of item names
+        """
+        return [player_item.item.name for player_item in self.inventory 
+                if player_item.item and player_item.quantity > 0]
+    
+    def has_all_items(self, item_names: List[str]) -> bool:
+        """Check if player has all the specified items with quantity > 0
+        
+        Args:
+            item_names: List of item names to check
+            
+        Returns:
+            bool: True if player has all items, False otherwise
+        """
+        player_items = self.get_item_names()
+        return all(item in player_items for item in item_names)
+    
+    def has_any_items(self, item_names: List[str]) -> bool:
+        """Check if player has any of the specified items with quantity > 0
+        
+        Args:
+            item_names: List of item names to check
+            
+        Returns:
+            bool: True if player has any of the items, False otherwise
+        """
+        player_items = self.get_item_names()
+        return any(item in player_items for item in item_names)
         
     def has_campaign(self, campaign_id: str) -> bool:
         """Check if player is already assigned to a campaign
