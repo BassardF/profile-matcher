@@ -66,3 +66,14 @@ class Player(db.Model):
             if player_item.item:
                 result[player_item.item.key] = player_item.quantity
         return result
+        
+    def has_campaign(self, campaign_id: str) -> bool:
+        """Check if player is already assigned to a campaign
+        
+        Args:
+            campaign_id: The ID of the campaign to check
+            
+        Returns:
+            bool: True if player is already assigned to the campaign, False otherwise
+        """
+        return any(campaign_id == campaign.campaign_id for campaign in self.campaigns)

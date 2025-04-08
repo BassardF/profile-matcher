@@ -19,7 +19,7 @@ def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
         return False
 
     # Filter out campaigns already assigned to the player
-    if any(campaign['id'] == player_campaign.campaign_id for player_campaign in player.campaigns):
+    if player.has_campaign(campaign['id']):
         return False
 
     # Check campaign dates
