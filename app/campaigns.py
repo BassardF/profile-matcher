@@ -1,7 +1,7 @@
 """
 Mock campaigns: fake API.
 """
-from typing import Dict, Any, List, Optional, Union
+from typing import Dict, Any, List, Union
 
 def create_campaign(
     campaign_id: str, 

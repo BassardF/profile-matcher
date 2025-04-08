@@ -2,7 +2,7 @@
 Player model and related association tables
 """
 from . import db
-from typing import List, Dict, Set
+from typing import List, Dict
 
 # Association tables
 player_campaign = db.Table('player_campaign',

@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, Optional
 from .models import Player
 
 def filter_eligible_campaigns(player: Player, campaign: Dict[str, Any]) -> bool:
