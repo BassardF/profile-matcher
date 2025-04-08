@@ -3,6 +3,7 @@ Device model
 """
 from . import db
 
+
 class Device(db.Model):
     """Device model representing player devices"""
     __tablename__ = 'devices'

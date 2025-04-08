@@ -3,6 +3,7 @@ Item model
 """
 from . import db
 
+
 class Item(db.Model):
     """Item model representing in-game items"""
     __tablename__ = 'items'

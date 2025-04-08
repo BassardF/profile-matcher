@@ -2,7 +2,7 @@
 
 * Pretty small service -> Flask
 * RDB but easy to use -> SQLite
-* ORM to avoid hand made SQL -> SQLAlchemy
+* ORM to avoid hand-made SQL -> SQLAlchemy
 * JSON serialization for the fun (overkill here) -> Marshmallow
 
 ## DB

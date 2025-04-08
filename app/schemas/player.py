@@ -8,6 +8,7 @@ from .device import DeviceSchema
 from .clan import ClanSchema
 from .campaign import CampaignSchema
 
+
 class PlayerSchema(ma.SQLAlchemyAutoSchema):
     """Schema for serializing Player objects"""
     class Meta:
@@ -47,6 +48,7 @@ class PlayerSchema(ma.SQLAlchemyAutoSchema):
             data['items'] = player.get_items_dict()
         
         return data
+
 
 # Initialize schemas
 player_schema = PlayerSchema()

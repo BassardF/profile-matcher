@@ -5,6 +5,7 @@ from marshmallow import fields
 from . import ma
 from ..models.item import Item
 
+
 class ItemSchema(ma.SQLAlchemyAutoSchema):
     """Schema for serializing Item objects"""
     class Meta:
@@ -15,6 +16,7 @@ class ItemSchema(ma.SQLAlchemyAutoSchema):
     key = fields.Str()
     name = fields.Str()
     description = fields.Str()
+
 
 # Initialize schemas
 item_schema = ItemSchema()

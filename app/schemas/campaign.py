@@ -5,6 +5,7 @@ from marshmallow import fields
 from . import ma
 from ..models.campaign import Campaign
 
+
 class CampaignSchema(ma.SQLAlchemyAutoSchema):
     """Schema for serializing Campaign objects"""
     class Meta:
@@ -14,6 +15,7 @@ class CampaignSchema(ma.SQLAlchemyAutoSchema):
     id = fields.Int(dump_only=True)
     campaign_id = fields.Str()
     name = fields.Str()
+
 
 # Initialize schemas
 campaign_schema = CampaignSchema()

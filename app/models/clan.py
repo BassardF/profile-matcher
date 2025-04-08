@@ -3,6 +3,7 @@ Clan model
 """
 from . import db
 
+
 class Clan(db.Model):
     """Clan model representing player groups"""
     __tablename__ = 'clans'

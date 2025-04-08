@@ -5,6 +5,7 @@ from marshmallow import fields
 from . import ma
 from ..models.device import Device
 
+
 class DeviceSchema(ma.SQLAlchemyAutoSchema):
     """Schema for serializing Device objects"""
     class Meta:
@@ -16,6 +17,7 @@ class DeviceSchema(ma.SQLAlchemyAutoSchema):
     model = fields.Str()
     carrier = fields.Str()
     firmware = fields.Str()
+
 
 # Initialize schemas
 device_schema = DeviceSchema()

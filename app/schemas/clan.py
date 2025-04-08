@@ -5,6 +5,7 @@ from marshmallow import fields
 from . import ma
 from ..models.clan import Clan
 
+
 class ClanSchema(ma.SQLAlchemyAutoSchema):
     """Schema for serializing Clan objects"""
     class Meta:
