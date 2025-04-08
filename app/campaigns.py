@@ -44,7 +44,7 @@ def get_active_campaigns() -> List[Dict[str, Any]]:
     """
     return [
         create_campaign(
-            campaign_id="campaign-007",
+            campaign_id="campaign-001",
             name="mycampaign",
             level_min=1,
             level_max=3,
