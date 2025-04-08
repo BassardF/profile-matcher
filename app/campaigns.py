@@ -3,14 +3,15 @@ Mock campaigns: fake API.
 """
 from typing import Dict, Any, List, Union
 
+
 def create_campaign(
-    campaign_id: str, 
-    name: str, 
-    level_min: int = 1, 
-    level_max: Union[int, float] = float('inf'), 
-    countries: List[str] = [], 
-    required_items: List[str] = [], 
-    excluded_items: List[str] = [], 
+    campaign_id: str,
+    name: str,
+    level_min: int = 1,
+    level_max: Union[int, float] = float('inf'),
+    countries: List[str] = [],
+    required_items: List[str] = [],
+    excluded_items: List[str] = [],
     enabled: bool = True
 ) -> Dict[str, Any]:
     return {
@@ -36,6 +37,7 @@ def create_campaign(
         "enabled": enabled,
         "last_updated": "2024-07-13 11:46:58Z"
     }
+
 
 def get_active_campaigns() -> List[Dict[str, Any]]:
     """
