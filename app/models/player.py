@@ -3,6 +3,7 @@ Player model and related association tables
 """
 from . import db
 from typing import List, Dict
+from .player_item import PlayerItem
 
 # Association tables
 player_campaign = db.Table('player_campaign',
@@ -14,17 +15,6 @@ player_device = db.Table('player_device',
     db.Column('player_id', db.String, db.ForeignKey('players.player_id'), primary_key=True),
     db.Column('device_id', db.Integer, db.ForeignKey('devices.id'), primary_key=True)
 )
-
-class PlayerItem(db.Model):
-    """Association model between Player and Item with quantity"""
-    __tablename__ = 'player_item'
-    
-    player_id = db.Column(db.String, db.ForeignKey('players.player_id'), primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False, default=1)
-    
-    # Relationship to Item
-    item = db.relationship("Item")
 
 class Player(db.Model):
     """Player model representing user profiles"""

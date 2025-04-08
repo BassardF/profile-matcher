@@ -1,5 +1,11 @@
 from app.app import app, db
-from app.models import Player, Item, Device, Clan, PlayerItem
+from app.models import (
+    Clan,
+    Device,
+    Item,
+    Player,
+    PlayerItem
+)
 from datetime import datetime
 
 PLAYER_ID = '97983be2-98b7-11e7-90cf-082e5f28d836'
