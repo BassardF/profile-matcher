@@ -10,11 +10,11 @@
 [DB Schema](https://i.ibb.co/ZRgFkQfC/Screenshot-2025-04-05-at-1-38-39-PM.png)
 
 * The DB model for Campaigns has been made simple (name only) to respect the rule, but doesn't match the shape of the one mocked (unusual, hence the awkward APICampaignSchema)
-* Devices should clearly be split in various sub tables, but as they are not central to the task, they are left as one
+* Devices should be split in various sub tables, but as they are not central to the task, they are left as one
 
 ## Questionable elements
 
-* My usage of SQLAlchemy is probably unoptimized, we are probably fetching way too much data to do the checks.
+* My usage of SQLAlchemy is probably unoptimized, we are likely over-fetching data.
 * A lot of logic is still done in app.js. If the application was meant to be a bit more complex, this would be moved to an in-between layer (separation of concerns).
 * The approach to matchers is manual, would not scale with with a large number of matchers
 * Config managment is inexistent, to keep things simple. Not an option in a "real" project.

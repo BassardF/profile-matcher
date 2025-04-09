@@ -17,8 +17,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 ma.init_app(app)
 
-# Healthcheck endpoint - usually on /healthcheck
-
 
 @app.route('/', methods=['GET'])
 def healthcheck() -> Dict[str, str]:
