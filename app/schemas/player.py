@@ -34,9 +34,16 @@ class PlayerSchema(ma.SQLAlchemyAutoSchema):
     gender = fields.Str()
     custom_field = fields.Str(attribute="_customfield")
 
-    devices = fields.List(fields.Nested(DeviceSchema, only=("device_id", "model", "carrier", "firmware")))
+    devices = fields.List(
+        fields.Nested(
+            DeviceSchema,
+            only=("device_id", "model", "carrier", "firmware"))
+    )
     clan = fields.Nested(ClanSchema, only=("clan_id", "name"))
-    campaigns = fields.List(fields.Nested(CampaignSchema, only=("campaign_id", "name")), attribute="campaigns")
+    campaigns = fields.List(
+        fields.Nested(CampaignSchema, only=("campaign_id", "name")),
+        attribute="campaigns"
+    )
     items = fields.Dict(keys=fields.Str(), values=fields.Int())
     
     @post_dump
